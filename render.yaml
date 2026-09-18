@@ -1,0 +1,27 @@
+# Render Blueprint for AOVShop NhanVienCu — Backend API
+# Deploy: push repo len GitHub -> Render Dashboard -> New -> Blueprint -> chon repo.
+# Sau do dien cac env `sync: false` trong Render Dashboard.
+
+services:
+  - type: web
+    name: aovshopnhanviencu-backend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: TURSO_DATABASE_URL
+        sync: false # vi du: libsql://xxx.turso.io
+      - key: TURSO_AUTH_TOKEN
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true # Render tu sinh secret moi (user cu phai login lai)
+      - key: FRONTEND_URL
+        sync: false # vi du: https://aovshopnhanviencu-frontend.onrender.com
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
